@@ -8,10 +8,10 @@ app.use(bodyParser.json());
 
 app.post('/webhook', (req, res) => {
     const jsonData = req.body;
-    if (req.query.ref === 'binance') {
-        broker.publish('m_binance', JSON.stringify(jsonData));
+    if (req.query.ref === 'crypto') {
+        broker.publish('crypto', JSON.stringify(jsonData));
     } else {
-        broker.publish('m_fx', JSON.stringify(jsonData));
+        broker.publish('pair', JSON.stringify(jsonData));
     }
     res.json({ 
         message: 'published',
