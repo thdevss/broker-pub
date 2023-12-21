@@ -8,9 +8,11 @@ app.use(bodyParser.json());
 
 app.post('/webhook', (req, res) => {
     const jsonData = req.body;
-    broker.publish(process.env.MESSAGE_TOPIC, jsonData);
-    // TODO::
-    // MESSAGE_TOPIC will dynamic
+    if (req.query.ref === 'binance') {
+        broker.publish('m_binance', JSON.stringify(jsonData));
+    } else {
+        broker.publish('m_fx', JSON.stringify(jsonData));
+    }
     res.json({ 
         message: 'published',
         data: jsonData
